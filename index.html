@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>çöpçatan</title>
+  <link rel="icon" href="untitled folder/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header">çöpçatan</div>
+  </header>
+  <main>
+    <div class="content">
+      <p>Flört uygulamalarından <span class="highlight">bıktınız mı?</span></p>
+      <p>Ortamdan sürekli <span class="highlight">'red flag'</span> ile mi ayrılıyorsunuz?</p>
+      <p>Uzun zamandır <span class="highlight">bekar mısınız?</span></p>
+      <p>Öyleyse bağlantıyı takip edin ve kaydolun.</p>
+      <p class="note">(şimdilik sadece Ankara/TR için geçerli)</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc5whtv0kUGk2vhnp1xSm_ef4bUrJW-YxyQpra3TiPm5srufw/viewform?usp=header" target="_blank" class="button">yarışmacı olarak başvur</a>
+      <p class="disclaimer">
+        çöpçatan, CTSS tarafından yönetilen deneysel bir web sitesidir. Yarışmacı olmak için başvurursanız, bir seçim sürecinden geçeceksiniz (çoğunlukla botları kaldırmak için) ve ardından flört profiliniz herkese açık olarak gösterilecektir. Daha sonra halk, sizin için uygun olacağına inandıkları biriyle sizi eşleştirecektir. Eşleştirme tamamlandığında, en yüksek oyu alan çift her biri 5000₺ alacaktır.
+      </p>
+    </div>
+  </main>
+  <script>
+    window.addEventListener('load', () => {
+      const header = document.querySelector('.header');
+      const content = document.querySelector('.content');
+      const paragraphs = content.querySelectorAll('p');
+  
+      header.addEventListener('animationend', () => {
+        // Header animasyonu tamamlandığında içerikleri göster
+        content.classList.add('show');
+  
+        // Yazıları sırayla ekrana çivi çakar gibi getirecek animasyonları başlat
+        paragraphs.forEach((p, index) => {
+          p.style.animationDelay = `${index * 0.5}s`; // Her paragrafın animasyon süresi
+          
+        });
+      });
+    });
+  </script>
+</body>
+</html>
