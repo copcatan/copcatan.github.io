@@ -19,7 +19,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 80px;
-    color: #00bf63;
+    color: #f75f99;
     text-transform: lowercase;
     animation: headerAnim 1s ease-out forwards;
   }
@@ -45,7 +45,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 120px; /* Başlangıçta büyük yazı */
-    color: #00bf63;
+    color: #f75f99;
     text-transform: lowercase;
     animation: headerAnim 1.5s ease-out forwards; /* Animasyon sonrası son stili korur */
   }
@@ -74,7 +74,7 @@ body {
   }
   
   .content .highlight {
-    color: #00bf63;
+    color: #f75f99;
   }
   
   .note {
@@ -89,7 +89,7 @@ body {
     margin: 20px 0;
     padding: 10px 20px;
     color: #000;
-    background-color: #00bf63;
+    background-color: #f75f99;
     text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
