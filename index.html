@@ -4,43 +4,358 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>çöpçatan</title>
-  <link rel="icon" href="untitled folder/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+    /* --- TEMEL SAYFA AYARLARI --- */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* --- GİZLENMİŞ İÇERİK --- */
+    .header {
+      font-size: 25px;
+      color: #f75f99;
+      text-transform: lowercase;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: none;
+    }
+
+    .content {
+      text-align: center;
+      max-width: 600px;
+      display: none;
+      opacity: 0;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1.5s forwards;
+    }
+    
+    /* --- TINDER KARTI GİRİŞ ANIMASYONU (Aynı) --- */
+    .tinder-container {
+      position: relative;
+      width: 300px;
+      height: 400px;
+    }
+    .card {
+      position: absolute; width: 300px; height: 400px;
+      background: #222; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; color: #f75f99; text-align: center;
+      padding: 20px; box-sizing: border-box; opacity: 1;
+    }
+    .card:nth-child(1) { z-index: 8; } .card:nth-child(2) { z-index: 7; transform: scale(0.98); }
+    .card:nth-child(3) { z-index: 6; transform: scale(0.96); } .card:nth-child(4) { z-index: 5; transform: scale(0.94); }
+    .card:nth-child(5) { z-index: 4; transform: scale(0.92); } .card:nth-child(6) { z-index: 3; transform: scale(0.90); }
+    .card:nth-child(7) { z-index: 2; transform: scale(0.88); } .card:nth-child(8) { z-index: 1; transform: scale(0.86); }
+
+    @keyframes swipe-right {
+      0% { transform: translateX(0) rotate(0); opacity: 1; }
+      100% { transform: translateX(500px) rotate(30deg); opacity: 0; }
+    }
+    .card-1 { animation: swipe-right 0.6s 1.0s forwards; } .card-2 { animation: swipe-right 0.6s 1.5s forwards; }
+    .card-3 { animation: swipe-right 0.5s 2.0s forwards; } .card-4 { animation: swipe-right 0.5s 2.4s forwards; }
+    .card-5 { animation: swipe-right 0.4s 2.8s forwards; } .card-6 { animation: swipe-right 0.4s 3.1s forwards; }
+    .card-7 { animation: swipe-right 0.3s 3.4s forwards; } .card-8 { animation: swipe-right 0.3s 3.6s forwards; }
+
+    .floating-heart {
+      position: absolute; font-size: 2.5rem; color: #f75f99;
+      bottom: 20px; right: 40px; opacity: 0; z-index: 10;
+    }
+    @keyframes floatAway {
+      0% { transform: scale(0.8); opacity: 1; }
+      100% { transform: translateY(-300px) scale(1.5); opacity: 0; }
+    }
+    .float-heart-1 { animation: floatAway 1s 1.0s forwards; } .float-heart-2 { animation: floatAway 1s 1.5s forwards; }
+    .float-heart-3 { animation: floatAway 1s 2.0s forwards; } .float-heart-4 { animation: floatAway 1s 2.4s forwards; }
+    .float-heart-5 { animation: floatAway 1s 2.8s forwards; } .float-heart-6 { animation: floatAway 1s 3.1s forwards; }
+    .float-heart-7 { animation: floatAway 1s 3.4s forwards; } .float-heart-8 { animation: floatAway 1s 3.6s forwards; }
+
+    /* --- İÇERİK STİLLERİ --- */
+    .content p { margin: 10px 0; }
+    .content .highlight { color: #f75f99; }
+    .note { font-size: 12px; margin-top: 5px; color: #fff; opacity: 0.8; }
+    
+    /* GÜNCELLENDİ: Buton tekrar 'a' (link) oldu */
+    .button {
+      display: inline-block; padding: 10px 20px;
+      color: #000;
+      background-color: #f75f99; /* Pembe ana buton */
+      text-decoration: none; border-radius: 5px; font-size: 16px;
+      transition: transform 0.3s ease, color 0.3s ease;
+      animation: pulseButton 1.5s 1s infinite;
+      margin: 20px 0; 
+      font-family: 'Montserrat', sans-serif;
+      font-weight: bold;
+      border: none;
+    }
+    .button:hover {
+      transform: scale(1.2); color: #fff;
+      animation-play-state: paused;
+    }
+    
+    .details-btn {
+      background: none; border: none; 
+      color: #f75f99; /* Pembe */
+      font-family: 'Montserrat', sans-serif; font-size: 12px;
+      text-decoration: underline; cursor: pointer; margin-top: 10px; 
+      transition: opacity 0.3s ease;
+    }
+    .details-btn:hover {
+        opacity: 0.8; 
+    }
+
+    /* --- KONTENJAN BARI STİLLERİ (Aynı) --- */
+    .batch-progress {
+        position: absolute;
+        bottom: 40px; 
+        width: 100%;
+        text-align: center;
+        color: #ccc;
+        display: none;
+        opacity: 0;
+        animation: fadeIn 1.5s 0.5s forwards;
+    }
+    .batch-progress h3 {
+        font-size: 0.9rem;
+        font-weight: normal;
+        opacity: 0.7;
+        margin-bottom: 15px;
+    }
+    .progress-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px; 
+    }
+    .progress-box { text-align: center; }
+    
+    .progress-circle {
+        width: 60px; height: 60px;
+        border-radius: 50%;
+        display: grid; place-items: center;
+        background: conic-gradient(var(--c) calc(var(--p) * 1%), #444 0);
+        position: relative;
+    }
+    .progress-circle::before {
+        content: ''; position: absolute;
+        width: 48px; height: 48px;
+        border-radius: 50%; background: #000;
+    }
+    .progress-inner {
+        position: relative; z-index: 1;
+        display: flex; flex-direction: column;
+        align-items: center; color: var(--c);
+    }
+    .progress-inner .fas { font-size: 1.2rem; } 
+    .progress-inner span { font-size: 1rem; font-weight: bold; margin-top: 2px; } 
+    .progress-box p { margin-top: 10px; font-size: 0.8rem; color: var(--c); } 
+    
+    /* --- Footer stili (Aynı) --- */
+    .footer {
+        position: absolute; bottom: 10px;
+        width: 100%; text-align: center;
+        font-size: 10px; color: #555; z-index: 100;
+    }
+    
+    /* --- POP-UP STİLLERİ (Sadece Detaylar için) --- */
+    .modal-backdrop {
+        display: none; 
+        position: fixed; top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.8); 
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+        animation: fadeIn 0.3s;
+    }
+    .modal-content {
+        position: fixed; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(10, 10, 10, 0.9); 
+        border: 1px solid #f75f99; 
+        color: #fff; 
+        border-radius: 10px;
+        padding: 30px;
+        width: 90%;
+        max-width: 500px;
+        z-index: 1001;
+        text-align: left;
+    }
+    .modal-content h3 { color: #f75f99; margin-top: 0; }
+    .modal-content ul { padding-left: 20px; }
+    .modal-content li { margin-bottom: 10px; }
+    .modal-content strong { color: #f75f99; }
+    .modal-content em { color: #ccc; font-size: 0.9em; }
+    .modal-close {
+        position: absolute; top: 10px; right: 15px;
+        font-size: 2rem; color: #aaa;
+        cursor: pointer; line-height: 1;
+        z-index: 1002;
+    }
+    .modal-close:hover { color: #fff; }
+    
+    /* SİLİNDİ: .ikas-frame ve .modal-content-ticket stilleri */
+    
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pulseButton {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="header">çöpçatan</div>
+
+  <div class="tinder-container" id="tinder-deck">
+    <div class="card card-1">sağa kaydır</div> <div class="card card-2">sağa kaydır</div>
+    <div class="card card-3">sağa kaydır</div> <div class="card card-4">sağa kaydır</div>
+    <div class="card card-5">sağa kaydır</div> <div class="card card-6">sağa kaydır</div>
+    <div class="card card-7">sağa kaydır</div> <div class="card card-8">sağa kaydır</div>
+    <div class="floating-heart float-heart-1"><i class="fas fa-heart"></i></div>
+    <div class="floating-heart float-heart-2"><i class="fas fa-heart"></i></div>
+    <div class="floating-heart float-heart-3"><i class="fas fa-heart"></i></div>
+    <div class="floating-heart float-heart-4"><i class="fas fa-heart"></i></div>
+    <div class="floating-heart float-heart-5"><i class="fas fa-heart"></i></div>
+    <div class="floating-heart float-heart-6"><i class="fas fa-heart"></i></div>
+    <div class="floating-heart float-heart-7"><i class="fas fa-heart"></i></div>
+    <div class="floating-heart float-heart-8"><i class="fas fa-heart"></i></div>
+  </div>
+
+  <header class="header" id="main-header">
+    çöpçatan
   </header>
-  <main>
-    <div class="content">
-      <p>Flört uygulamalarından <span class="highlight">bıktınız mı?</span></p>
-      <p>Ortamdan sürekli <span class="highlight">'red flag'</span> ile mi ayrılıyorsunuz?</p>
-      <p>Uzun zamandır <span class="highlight">bekar mısınız?</span></p>
-      <p>Öyleyse bağlantıyı takip edin ve kaydolun.</p>
-      <p class="note">(şimdilik sadece Ankara/TR için geçerli)</p>
-      <a href="https://forms.gle/KbmNVvjP6X4dQpSy7" target="_blank" class="button">yarışmacı olarak başvur</a>
-      <p class="disclaimer">
-        çöpçatan, CTSS tarafından yönetilen deneysel bir web sitesidir. Yarışmacı olmak için başvurursanız, bir seçim sürecinden geçeceksiniz (çoğunlukla botları kaldırmak için) ve ardından flört profiliniz herkese açık olarak gösterilecektir. Daha sonra halk, sizin için uygun olacağına inandıkları biriyle sizi eşleştirecektir. Eşleştirme tamamlandığında, en yüksek oyu alan çift her biri 100$ alacaktır.
-      </p>
-    </div>
+  
+  <main class="content" id="main-content">
+    <p>Sağa kaydırmaktan <span class="highlight">bıktınız mı?</span></p>
+    <p>Eşleş, mesajlaş ve bunu <span class="highlight">sonsuza kadar</span> tekrarla...</p>
+    <p>Bence de <span class="highlight">sıkıcı.</span></p>
+    <p>Kaydırmayı bırak. Ankara'nın en büyük <span class="highlight">offline</span> blind-date organizasyonu başlıyor.</p>
+    <p>Burası herkes için değil. Sadece <span class="highlight">referansla</span> onaylanan, <span class="highlight">gerçek</span> profillerin kabul edildiği elit bir topluluğa davetlisin.</p>
+    <p class="note">(Sıradaki batch dolmadan yerini al!)</p>
+    <p class="note">(şimdilik sadece Ankara/TR'de)</p>
+    
+    <a href="https://testingin1day.ikas.shop/copcatan-bilet" target="_blank" class="button">Biletini al ve yerini garantile</a>
+    
+    <button class="details-btn" id="details-popup-trigger">detaylar</button>
   </main>
+
+  <div class="batch-progress" id="batch-progress">
+    <h3>BATCH HIZLA DOLUYOR! (Mart 2026)</h3>    
+    <div class="progress-container">
+        <div class="progress-box">
+            <div class="progress-circle" style="--p:22; --c:#777;">
+                <div class="progress-inner">
+                    <i class="fas fa-mars"></i>
+                    <span>22%</span>
+                </div>
+            </div>
+            <p style="color:#777;">Erkek</p>
+        </div>
+        <div class="progress-box">
+            <div class="progress-circle" style="--p:13; --c:#777;">
+                <div class="progress-inner">
+                    <i class="fas fa-venus"></i>
+                    <span>13%</span>
+                </div>
+            </div>
+            <p style="color:#777;">Kadın</p>
+        </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    &copy; 2024 çöpçatan. All rights reserved.
+  </footer>
+
+  <div class="modal-backdrop" id="details-modal">
+    <div class="modal-content">
+        <span class="modal-close" id="modal-close-btn">&times;</span>
+        <h3>Süreç Nasıl İşliyor?</h3>
+        <ul>
+            <li>
+                <strong>Organizasyon "Batch" (Grup) Usulüyle Yapılır:</strong>
+                Her event, <strong>50 kadın ve 50 erkek</strong> biletli katılımcı kotası dolduğunda başlar.
+            </li>
+            <li>
+                <strong>Form & Onay Süreci:</strong>
+                Bileti aldığınızda, <strong>e-posta adresinize</strong> özel bir kayıt formu gönderilir. Bu formu 24 saat içinde detaylıca doldurmanız gerekir. Profiliniz, "elit" konseptimize göre onaylanır.
+                <br><em>(Profiliniz onaylanmazsa bilet ücretiniz anında iade edilir.)</em>
+            </li>
+            <li>
+                <strong>Eşleşme:</strong>
+                Onaylanan tüm profiller, organizatörler tarafından "çöpçatan" gibi eşleştirilir.
+            </li>
+            <li>
+              <strong>Dating:</strong>
+                Tüm eşleşmeler tamamlandığında, bireyler eşleştiği partneri ile önce yalnız olarak buluşur. Buluşmaların tamamlanması ardından, online bir oturumla katılımcıların oylaması ile "en gözde çiftler" belirlenir.
+            </li>
+            <li>
+                <strong>Final Oylaması ve Ödül:</strong>
+               En gözde 5 çift toplu olarak Final Partisi'ne davet edilir. <em>Gece sonu yapılan açık oylama ile</em> Birinci seçilen çift, <strong>kişi başı 5000 TL</strong> ödül kazanır.
+            </li>
+        </ul>
+    </div>
+  </div>
+
   <script>
     window.addEventListener('load', () => {
-      const header = document.querySelector('.header');
-      const content = document.querySelector('.content');
-      const paragraphs = content.querySelectorAll('p');
-  
-      header.addEventListener('animationend', () => {
-        // Header animasyonu tamamlandığında içerikleri göster
-        content.classList.add('show');
-  
-        // Yazıları sırayla ekrana çivi çakar gibi getirecek animasyonları başlat
-        paragraphs.forEach((p, index) => {
-          p.style.animationDelay = `${index * 0.5}s`; // Her paragrafın animasyon süresi
-          
+      // Gerekli tüm elementleri seç
+      const tinderDeck = document.getElementById('tinder-deck');
+      const mainHeader = document.getElementById('main-header');
+      const mainContent = document.getElementById('main-content');
+      const batchProgress = document.getElementById('batch-progress');
+
+      // Detaylar Modal'ı için
+      const detailsButton = document.getElementById('details-popup-trigger');
+      const detailsModal = document.getElementById('details-modal');
+      const detailsCloseButton = document.getElementById('modal-close-btn');
+
+      // SİLİNDİ: Bilet Modal'ı için scriptler
+
+      // Ana animasyon
+      setTimeout(() => {
+        tinderDeck.style.display = 'none';
+        mainHeader.style.display = 'block';
+        mainContent.style.display = 'flex';
+        batchProgress.style.display = 'block';
+      }, 4500);
+      
+      // Detaylar Modal Kontrolü
+      if (detailsButton) {
+        detailsButton.addEventListener('click', () => {
+            detailsModal.style.display = 'block'; 
         });
-      });
+      }
+      if (detailsCloseButton) {
+        detailsCloseButton.addEventListener('click', () => {
+            detailsModal.style.display = 'none';
+        });
+      }
+      if (detailsModal) {
+        detailsModal.addEventListener('click', (event) => {
+            if (event.target === detailsModal) {
+                detailsModal.style.display = 'none';
+            }
+        });
+      }
+
+      // SİLİNDİ: Bilet Modal Kontrolü
     });
   </script>
+
 </body>
 </html>
